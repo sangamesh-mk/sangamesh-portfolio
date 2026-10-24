@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Set SITE_URL in frontend/.env before relying on sitemap in production.
+Sitemap: /sitemap.xml
