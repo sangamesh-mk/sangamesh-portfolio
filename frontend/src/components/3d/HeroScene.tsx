@@ -3,6 +3,7 @@ import { Float } from "@react-three/drei";
 import { Suspense, useMemo, useRef } from "react";
 import type { Group, Mesh } from "three";
 import { useFinePointer, usePrefersReducedMotion } from "@/hooks/useMediaQuery";
+import { WebGLBoundary } from "@/components/3d/WebGLBoundary";
 
 function NodeField({ interactive }: { interactive: boolean }) {
   const group = useRef<Group>(null);
@@ -58,6 +59,7 @@ export function HeroScene() {
 
   return (
     <div className="absolute inset-0" aria-hidden="true">
+      <WebGLBoundary>
       <Suspense fallback={null}>
         <Canvas
           dpr={[1, 1.5]}
@@ -73,6 +75,7 @@ export function HeroScene() {
           <NodeField interactive={fine} />
         </Canvas>
       </Suspense>
+      </WebGLBoundary>
     </div>
   );
 }

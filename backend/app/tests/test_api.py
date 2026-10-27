@@ -43,6 +43,15 @@ def test_chat_rejects_empty():
     assert response.status_code == 422
 
 
+def test_contact_honeypot_is_silent():
+    response = client.post(
+        "/api/contact",
+        json={"name": "Bot", "email": "bot@example.com", "message": "Hello from a visitor.", "website": "https://spam.test"},
+    )
+    assert response.status_code == 200
+    assert response.json()["data"]["delivery"] == "none"
+
+
 def test_contact_demo_does_not_claim_email():
     response = client.post(
         "/api/contact",

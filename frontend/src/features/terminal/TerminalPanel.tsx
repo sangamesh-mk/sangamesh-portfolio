@@ -76,7 +76,7 @@ export function TerminalPanel({ open, onClose }: { open: boolean; onClose: () =>
 
   return (
     <section
-      className="fixed right-4 bottom-24 z-40 w-[min(100%-2rem,32rem)] overflow-hidden rounded-2xl border border-[var(--line)] bg-[#0c0d11] text-[#d7e0d2] shadow-2xl"
+      className="fixed right-4 bottom-24 left-4 z-40 w-auto max-h-[min(70vh,32rem)] overflow-hidden rounded-2xl border border-[var(--line)] bg-[#0c0d11] text-[#d7e0d2] shadow-2xl sm:left-auto sm:w-[min(100%-2rem,32rem)]"
       aria-label="Portfolio terminal"
     >
       <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 font-mono text-xs">

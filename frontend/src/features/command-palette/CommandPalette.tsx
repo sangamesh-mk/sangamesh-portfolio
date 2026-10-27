@@ -84,11 +84,10 @@ export function CommandPalette({
       },
       {
         id: "help",
-        label: "Keyboard shortcuts",
+        label: "Show keyboard shortcuts",
         hint: "Help",
-        run: () => {
-          document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-        },
+        keywords: "shortcuts help",
+        run: () => undefined,
       },
     ];
     return list;
@@ -100,16 +99,9 @@ export function CommandPalette({
   });
 
   useEffect(() => {
-    if (!open) return;
-    setQuery("");
-    setIndex(0);
     const id = window.setTimeout(() => inputRef.current?.focus(), 20);
     return () => window.clearTimeout(id);
-  }, [open]);
-
-  useEffect(() => {
-    setIndex(0);
-  }, [query]);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -132,7 +124,7 @@ export function CommandPalette({
         if (action) {
           playUiTone("success");
           action.run();
-          onClose();
+          if (action.id !== "help") onClose();
         }
       }
     };
@@ -158,7 +150,10 @@ export function CommandPalette({
           id="command-search"
           ref={inputRef}
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setIndex(0);
+          }}
           placeholder="Search sections, projects, theme, terminal…"
           className="w-full border-b border-[var(--line)] bg-transparent px-4 py-4 outline-none"
         />
@@ -180,7 +175,7 @@ export function CommandPalette({
                   onClick={() => {
                     playUiTone("success");
                     action.run();
-                    onClose();
+                    if (action.id !== "help") onClose();
                   }}
                 >
                   <span>{action.label}</span>

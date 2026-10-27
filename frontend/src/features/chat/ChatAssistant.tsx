@@ -22,6 +22,7 @@ export function ChatAssistant() {
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const lastFailed = useRef<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
@@ -44,12 +45,14 @@ export function ChatAssistant() {
     setPending(true);
     try {
       const data = await api.chat(trimmed);
+      lastFailed.current = null;
       const prefix = data.mode === "demo" ? "Demo mode: " : "";
       setMessages((current) => [
         ...current,
         { id: crypto.randomUUID(), role: "assistant", text: `${prefix}${data.reply}` },
       ]);
     } catch (caught) {
+      lastFailed.current = trimmed;
       const message = caught instanceof Error ? caught.message : "The assistant is unavailable.";
       setError(message);
     } finally {
@@ -93,8 +96,16 @@ export function ChatAssistant() {
             {error ? (
               <div className="rounded-xl border border-red-400/40 px-3 py-2 text-sm">
                 <p>{error}</p>
-                <button type="button" className="mt-2 underline" onClick={() => setError(null)}>
-                  Dismiss
+                <button
+                  type="button"
+                  className="mt-2 underline"
+                  onClick={() => {
+                    const retry = lastFailed.current;
+                    setError(null);
+                    if (retry) void send(retry);
+                  }}
+                >
+                  Retry
                 </button>
               </div>
             ) : null}

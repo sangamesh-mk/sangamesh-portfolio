@@ -8,7 +8,7 @@ export const projects: ProjectRecord[] = [
     status: "In development",
     accent: "#7c6cff",
     tags: ["Flutter", "Dart", "Mobile UI"],
-    stack: ["Flutter", "Dart"],
+    stack: ["Flutter", "Dart", "shared_preferences"],
     summary: "A campus communication and community application with screens for identity, feed, chat, and discovery.",
     overview:
       "Connect Campus is a campus community app concept focused on helping students share updates, discover people, and communicate in a familiar social layout.",
@@ -67,14 +67,16 @@ export const projects: ProjectRecord[] = [
     stack: ["Python", "Gemini API"],
     summary: "An AI-agent experiment for tool use, function calling, and hackathon preparation.",
     overview:
-      "AURA is an AI-agent project under development. It started as Python-based experimentation with tool-style functions and the Gemini API while preparing for an AI-agent hackathon.",
+      "AURA is an AI-agent project under development. Local work includes a Python agent engine for registered tools, calculator-style function testing, a datetime tool, memory and task-planner modules, and initial Gemini API experiments while preparing for an AI-agent hackathon.",
     problem:
       "Building reliable agents requires more than a prompt. Tool calling, constrained actions, and honest failure handling need to be practiced in small, testable pieces.",
     solution:
-      "AURA treats agent capabilities as reusable components. Early work includes calculator-style tool/function testing and initial Gemini API experiments.",
+      "AURA treats agent capabilities as reusable components. Current modules cover tool registration, arithmetic tools, datetime lookup, and early planner/memory experiments.",
     features: [
-      { label: "Python AI-engine experimentation", kind: "in-progress" },
+      { label: "Python agent engine for registered tools", kind: "implemented" },
       { label: "Calculator-style tool/function testing", kind: "implemented" },
+      { label: "Current datetime tool", kind: "implemented" },
+      { label: "Memory and task-planner modules", kind: "in-progress" },
       { label: "Initial Gemini API experimentation", kind: "implemented" },
       { label: "Hackathon preparation", kind: "in-progress" },
       { label: "Autonomous production agent", kind: "planned" },

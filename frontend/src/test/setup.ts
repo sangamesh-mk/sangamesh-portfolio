@@ -29,3 +29,10 @@ HTMLCanvasElement.prototype.getContext = (() => ({
   arc: () => undefined,
   fill: () => undefined,
 })) as never;
+
+if (!window.crypto.randomUUID) {
+  window.crypto.randomUUID = () => "00000000-0000-4000-8000-000000000000";
+}
+
+window.requestAnimationFrame = (() => 1) as typeof window.requestAnimationFrame;
+window.cancelAnimationFrame = (() => undefined) as typeof window.cancelAnimationFrame;

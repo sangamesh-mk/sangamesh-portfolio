@@ -1,13 +1,9 @@
 import { Volume2, VolumeX } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { isSoundEnabled, loadSoundPreference, playUiTone, setSoundEnabled } from "@/lib/sound";
 
 export function SoundToggle() {
-  const [on, setOn] = useState(false);
-
-  useEffect(() => {
-    setOn(loadSoundPreference());
-  }, []);
+  const [on, setOn] = useState(() => loadSoundPreference());
 
   return (
     <button

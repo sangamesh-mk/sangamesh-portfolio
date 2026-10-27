@@ -70,12 +70,14 @@ export default function App() {
         Terminal
       </button>
       <TerminalPanel open={terminalOpen} onClose={() => setTerminalOpen(false)} />
-      <CommandPalette
-        open={paletteOpen}
-        onClose={closePalette}
-        onOpenTerminal={() => setTerminalOpen(true)}
-        onOpenProject={setProjectSlug}
-      />
+      {paletteOpen ? (
+        <CommandPalette
+          open
+          onClose={closePalette}
+          onOpenTerminal={() => setTerminalOpen(true)}
+          onOpenProject={setProjectSlug}
+        />
+      ) : null}
       <ChatAssistant />
     </div>
   );

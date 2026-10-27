@@ -1,6 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("@/hooks/useScrollReveal", () => ({
+  useScrollReveal: () => undefined,
+}));
+
+vi.mock("@/components/atmosphere/ParticleField", () => ({
+  ParticleField: () => null,
+}));
+
+vi.mock("@/components/3d/HeroScene", () => ({
+  HeroScene: () => null,
+}));
+
 import App from "./App";
 
 describe("portfolio shell", () => {

@@ -5,20 +5,19 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from slowapi.util import get_remote_address
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.api.routes import router
 from app.core.config import get_settings
+from app.core.limiter import limiter
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("portfolio")
 
 settings = get_settings()
-limiter = Limiter(key_func=get_remote_address, default_limits=[settings.rate_limit])
 
 
 class LimitRequestSize(BaseHTTPMiddleware):

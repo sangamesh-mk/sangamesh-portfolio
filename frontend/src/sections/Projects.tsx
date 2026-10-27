@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { X } from "lucide-react";
 import { projects } from "@/data/projects";
 import type { ProjectRecord } from "@/types";
@@ -29,7 +29,21 @@ export function Projects({
   onClose: () => void;
 }) {
   const active = useMemo(() => projects.find((project) => project.slug === activeSlug) ?? null, [activeSlug]);
+  const closeRef = useRef<HTMLButtonElement>(null);
   useLockBody(Boolean(active));
+
+  useEffect(() => {
+    if (!active) return;
+    closeRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active, onClose]);
 
   return (
     <section id="projects" className="px-4 py-20 sm:px-6">
@@ -100,7 +114,13 @@ export function Projects({
                   {active.name}
                 </h3>
               </div>
-              <button type="button" className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)]" onClick={onClose} aria-label="Close">
+              <button
+                ref={closeRef}
+                type="button"
+                className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)]"
+                onClick={onClose}
+                aria-label="Close"
+              >
                 <X size={16} />
               </button>
             </div>
@@ -132,13 +152,4 @@ export function Projects({
       ) : null}
     </section>
   );
-}
-
-export function useProjectModal() {
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
-  return {
-    activeSlug,
-    open: (slug: string) => setActiveSlug(slug),
-    close: () => setActiveSlug(null),
-  };
 }
